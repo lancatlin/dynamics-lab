@@ -20,14 +20,6 @@ function draw() {
   textSize(16)
   strokeWeight(1)
   text(usage, 20, 30)
-  if (mouseIsPressed) {
-    ball.a.set(
-      (mouseX - ball.p.x) / m,
-      (mouseY - ball.p.y) / m,
-    )
-  } else {
-    ball.a.set(0, 0)
-  }
   updateBall()
   drawBall()
 }
@@ -71,6 +63,14 @@ function updateBall() {
   }
   if (ball.p.y > windowHeight - ball.r || ball.p.y < ball.r) {
     ball.v.y *= -1
+  }
+  if (mouseIsPressed) {
+    ball.a.set(
+      (mouseX - ball.p.x) / m,
+      (mouseY - ball.p.y) / m,
+    )
+  } else {
+    ball.a.set(0, 0)
   }
 }
 
