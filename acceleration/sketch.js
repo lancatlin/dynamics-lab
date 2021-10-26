@@ -1,9 +1,9 @@
 let ball = {}
-const m = 2500
+const m = 25
 const length = 20
-const aLength = 1000
+const aLength = length
 const SPACE = 32
-const usage = "Left click to pull the ball.\nSpace to stop the ball."
+const usage = "Left click to pull the ball.\nSpace to stop the ball.\n"
 
 function setup() {
   createCanvas(windowWidth, windowHeight)
@@ -19,7 +19,7 @@ function draw() {
   background(220)
   textSize(16)
   strokeWeight(1)
-  text(usage, 20, 30)
+  text(usage+`fps: ${Math.round(frameRate())}`, 20, 30)
   updateBall()
   drawBall()
 }
@@ -56,7 +56,7 @@ function pretty(x, n = 100) {
 }
 
 function updateBall() {
-  ball.v.add(ball.a)
+  ball.v.add(p5.Vector.div(ball.a, frameRate()))
   ball.p.add(ball.v)
   if (ball.p.x > windowWidth - ball.r || ball.p.x < ball.r) {
     ball.v.x *= -1
