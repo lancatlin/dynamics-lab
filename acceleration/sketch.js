@@ -1,7 +1,7 @@
 let ball = {}
 const m = 2500
 const length = 20
-const aLength = 200
+const aLength = 1000
 const SPACE = 32
 const usage = "Left click to pull the ball.\nSpace to stop the ball."
 
@@ -35,13 +35,15 @@ function draw() {
 function drawBall() {
   if (mouseIsPressed) {
     stroke(0)
-    line(ball.p.x, ball.p.y, mouseX, mouseY)
-    text(`${pretty(ball.a.mag())}`, mouseX, mouseY)
-    // stroke(100, 100, 255)
-    // strokeWeight(4)
-    // drawLine(tangent(ball.a, ball.v), aLength)
-    // stroke(100, 200, 100)
-    // drawLine(normalA(ball.a, ball.v), aLength)
+    // line(ball.p.x, ball.p.y, mouseX, mouseY)
+    drawLine(ball.a, aLength)
+    stroke(100, 100, 255)
+    strokeWeight(4)
+    const t = tangent(ball.a, ball.v)
+    drawLine(t, aLength)
+    stroke(100, 200, 100)
+    const n = normalA(ball.a, ball.v)
+    drawLine(n, aLength)
   }
   stroke(200, 100, 100)
   strokeWeight(1)
@@ -74,23 +76,16 @@ function updateBall() {
 
 function keyPressed() {
   if (keyCode === SPACE) {
-    ball.v = [0, 0]
+    ball.v.set(0, 0)
   }
 }
 
 function tangent(a, v) {
-  const l = hypotenuse(v)
-  const at = (a[0] * v[0] + a[1] * v[1]) / l // dot
-  return v.map(x => x * at / l)
-}
-
-function squareSum(v) {
-  return v[0] * v[0] + v[1] * v[1]
+  const ut = p5.Vector.normalize(v)
+  return p5.Vector.mult(ut, a.dot(ut))
 }
 
 function normalA(a, v) {
-  const vl = hypotenuse(v)
-  const uv = [ v[1], -v[0] ]
-  const an = Math.sqrt(squareSum(a), squareSum(tangent(a, v)))
-  return uv.map(x => x * an / vl)
+  const un = p5.Vector.normalize(p5.Vector.rotate(v, HALF_PI))
+  return p5.Vector.mult(un, a.dot(un))
 }
