@@ -51,7 +51,7 @@ function drawLine(vector, length) {
   line(ball.p.x, ball.p.y, vp.x, vp.y)
 }
 
-function pretty(x, n = 100) {
+function pretty(x, n = 1) {
   return Math.round(x * n) / n
 }
 
