@@ -1,6 +1,6 @@
 let ball = {}
-const m = 25
-const length = 20
+const m = 1
+const length = 1
 const aLength = length
 const SPACE = 32
 const usage = "Left click to pull the ball.\nSpace to stop the ball.\n"
@@ -57,7 +57,7 @@ function pretty(x, n = 100) {
 
 function updateBall() {
   ball.v.add(p5.Vector.div(ball.a, frameRate()))
-  ball.p.add(ball.v)
+  ball.p.add(p5.Vector.div(ball.v, frameRate()))
   if (ball.p.x > windowWidth - ball.r || ball.p.x < ball.r) {
     ball.v.x *= -1
   }
