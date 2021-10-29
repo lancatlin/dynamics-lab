@@ -58,11 +58,17 @@ function pretty(x, n = 1) {
 function updateBall() {
   ball.v.add(p5.Vector.div(ball.a, frameRate()))
   ball.p.add(p5.Vector.div(ball.v, frameRate()))
-  if (ball.p.x > windowWidth - ball.r || ball.p.x < ball.r) {
-    ball.v.x *= -1
+  if (ball.p.x > windowWidth - ball.r) {
+    ball.v.x = -Math.abs(ball.v.x)
   }
-  if (ball.p.y > windowHeight - ball.r || ball.p.y < ball.r) {
-    ball.v.y *= -1
+  if (ball.p.x < ball.r) {
+    ball.v.x = Math.abs(ball.v.x)
+  }
+  if (ball.p.y > windowHeight - ball.r) {
+    ball.v.y = -Math.abs(ball.v.y)
+  }
+  if(ball.p.y < ball.r) {
+    ball.v.y = Math.abs(ball.v.y)
   }
   if (mouseIsPressed) {
     ball.a.set(
