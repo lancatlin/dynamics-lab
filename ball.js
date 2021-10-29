@@ -75,4 +75,13 @@ class Ball {
     ellipse(this.x, this.y, this.r * 2, this.r * 2);
     fill(0)
   }
+
+  isMoving() {
+    return this.v.magSq() !== 0
+  }
+
+  touched(ball) {
+    const v = p5.Vector.sub(this.p, ball.p)
+    return (v.magSq() < sq(this.r+ball.r))
+  }
 }
