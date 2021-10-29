@@ -51,6 +51,7 @@ class Ball {
   }
 
   draw() {
+    strokeWeight(0)
     fill(...this.color)
     ellipse(this.x, this.y, this.r * 2, this.r * 2);
     fill(0)
