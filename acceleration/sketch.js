@@ -7,7 +7,7 @@ const usage = "Left click to pull the ball.\nSpace to stop the ball.\n";
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  ball = new Ball(windowWidth / 2, windowHeight / 2, 15);
+  ball = new Ball({x: windowWidth / 2, y: windowHeight / 2});
 }
 
 function draw() {
@@ -48,6 +48,6 @@ function pretty(x, n = 1) {
 
 function keyPressed() {
   if (keyCode === SPACE) {
-    this.v.set(0, 0);
+    ball.v.set(0, 0);
   }
 }

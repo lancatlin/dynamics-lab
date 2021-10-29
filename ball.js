@@ -1,9 +1,11 @@
 class Ball {
-  constructor(x, y, r = 15) {
+  constructor({x, y, r=15, c=[255, 255, 255]}) {
     this.p = createVector(x, y);
     this.v = createVector(0, 0);
     this.a = createVector(0, 0);
     this.r = r;
+    this.color = c;
+    console.log(this.r)
   }
 
   get x() {
@@ -49,6 +51,8 @@ class Ball {
   }
 
   draw() {
+    fill(...this.color)
     ellipse(this.x, this.y, this.r * 2, this.r * 2);
+    fill(0)
   }
 }
