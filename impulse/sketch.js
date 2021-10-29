@@ -1,3 +1,5 @@
+const strength = 5;
+const uk = 300
 let cueBall = null;
 let cue = null;
 
@@ -23,16 +25,17 @@ class Cue {
   }
 
   deactivate() {
+    this.startPoint.set(cueBall.x, cueBall.y)
     this.endPoint.set(mouseX, mouseY)
     this.active = false
     const v = p5.Vector.sub(this.startPoint, this.endPoint)
-    cueBall.v.set(v)
+    cueBall.v.set(p5.Vector.mult(v, strength))
   }
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  cueBall = new Ball({ x: 500, y: 500 });
+  cueBall = new Ball({ x: 500, y: 500, uk });
   cue = new Cue();
 }
 
@@ -43,10 +46,18 @@ function draw() {
   cue.draw()
 }
 
+function isStatic() {
+  return cueBall.v.magSq() === 0
+}
+
 function mousePressed() {
-  cue.activate()
+  if (isStatic()) {
+    cue.activate()
+  }
 }
 
 function mouseReleased() {
-  cue.deactivate()
+  if (cue.active && isStatic()) {
+    cue.deactivate()
+  }
 }

@@ -1,9 +1,10 @@
 class Ball {
-  constructor({x, y, r=15, c=[255, 255, 255]}) {
+  constructor({x, y, r=15, c=[255, 255, 255], uk=0}) {
     this.p = createVector(x, y);
     this.v = createVector(0, 0);
     this.a = createVector(0, 0);
     this.r = r;
+    this.uk = uk
     this.color = c;
     console.log(this.r)
   }
@@ -19,6 +20,24 @@ class Ball {
   update() {
     this.v.add(p5.Vector.div(this.a, frameRate()));
     this.p.add(p5.Vector.div(this.v, frameRate()));
+    this.edge()
+    this.friction()
+  }
+
+  friction() {
+    if (this.uk === 0) {
+      return
+    }
+    if (this.v.magSq() > 0) {
+      if (this.v.mag() < this.uk / frameRate()) {
+        this.v.set(0, 0)
+      } else {
+        this.v.sub(p5.Vector.mult(p5.Vector.normalize(this.v), this.uk / frameRate()))
+      }
+    }
+  }
+
+  edge() {
     if (this.p.x > windowWidth - this.r) {
       this.v.x = -Math.abs(this.v.x);
     }
