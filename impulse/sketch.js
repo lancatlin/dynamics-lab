@@ -38,8 +38,8 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   cueBall = new Ball({ x: 350, y: 200, uk });
   cue = new Cue();
-  for (let i = 1; i <= 6; i ++) {
-    for (let j = 1; j <= 6; j++) {
+  for (let i = 1; i <= 5; i ++) {
+    for (let j = 1; j <= 5; j++) {
       balls.push(new Ball({
         x: 100 * i, y: 100 * j, uk, c: [100 + i * 30, 100 + j * 30, 150]
       }))
@@ -64,12 +64,12 @@ function draw() {
 function checkCollision() {
   const allBalls = [cueBall, ...balls]
   const processed = []
-  for (const a of allBalls) {
+  for (const a of allBalls.filter(v => v.isMoving())) {
     for (const b of allBalls.filter(v => v !== a && !processed.includes(v) && a.touched(v))) {
-      const p = intersection(a, b)
-      point(p)
-      console.log(p)
-      // collide(a, b)
+      // const p = intersection(a, b)
+      // point(p)
+      // console.log(p)
+      collide(a, b)
     }
     processed.push(a)
   }
